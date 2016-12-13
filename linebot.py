@@ -12,7 +12,7 @@ class LineBot(object):
 
     def __init__(self):
 
-        self.weather_crawler = None #TODO
+        self.weather_parser = None #TODO
         self.taiwan_cities = ["臺北市","新北市","桃園市","臺中市","臺南市",
                             "高雄市","基隆市","新竹市","嘉義市","新竹縣","苗栗縣",
                             "彰化縣","南投縣","雲林縣","嘉義縣","屏東縣","宜蘭縣",
@@ -26,7 +26,7 @@ class LineBot(object):
 
         if "天氣" in sentence:
             location = self.getLocation(sentence)
-            response = self.weather_crawler.getReport(location) # 依照地點取得該地今天的天氣
+            response = self.weather_parser.getReport(location) # 依照地點取得該地今天的天氣
         else:
             response = self.echo(sentence)
         return response
@@ -35,12 +35,13 @@ class LineBot(object):
 
         """
         比對 sentence 與臺灣的 23 個縣市,
-        如果比對成功回傳該縣市名, 否則回傳臺南
+        如果比對成功回傳該縣市名, 否則回傳臺南市
         """
         for city in self.taiwan_cities:
             if city in sentence:
                 print(city)
                 return city
+        return "臺南市"
 
     def echo(self, sentence):
         return sentence
