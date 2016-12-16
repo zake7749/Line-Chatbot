@@ -36,6 +36,7 @@ class  WeatherParser(object):
         headers = {'Authorization': self.user_key}
         res = requests.get("http://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?locationName=%s" % location,
                     headers=headers)
+        print(res.json())
         return res.json()
 
     def parseJSONReport(self, report):
