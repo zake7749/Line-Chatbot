@@ -1,5 +1,5 @@
 # Line 天氣應答機器人
-
+![Result](http://i.imgur.com/OEYUfCZ.jpg?1)
 ## 環境配置
 
 本專案採用 python3 開發，
