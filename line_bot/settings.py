@@ -30,7 +30,8 @@ LINE_CHANNEL_SECRET = get_env_variable("LINE_CHANNEL_SECRET")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'lineweatherbot.herokuapp.com'
+    'lineweatherbot.herokuapp.com',
+    '127.0.0.1',
 ]
 
 

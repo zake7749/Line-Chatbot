@@ -36,7 +36,6 @@ class  WeatherParser(object):
         headers = {'Authorization': self.user_key}
         res = requests.get("http://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?locationName=%s" % location,
                     headers=headers)
-        print(res.json())
         return res.json()
 
     def parseJSONReport(self, report):
@@ -91,11 +90,7 @@ class  WeatherParser(object):
             - description : 目前時間區段中該 type 的氣象描述
         """
 
-        cur_time = datetime.datetime.now()
-        report_time = []
-
-        #TODO FIXME
-
+        # 第一份資料為目前時間點
         return weather_element["time"][0]["parameter"]["paramterName"]
 
 
