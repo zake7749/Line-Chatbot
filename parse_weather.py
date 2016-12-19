@@ -12,7 +12,7 @@ from util import get_env_variable
 def main():
 
     wp = WeatherParser()
-    print(wp.getReport("臺北市"))
+    print(wp.getReport("臺南市"))
 
 class  WeatherParser(object):
 
@@ -25,6 +25,8 @@ class  WeatherParser(object):
     def getReportWithAPI(self, location):
 
         """
+        [本次作業不會用到，助教可以忽略此函式]
+
         使用中央氣象局的 Restful API 提取資料
 
         Args:
@@ -41,6 +43,8 @@ class  WeatherParser(object):
     def parseJSONReport(self, report):
 
         """
+        [本次作業不會用到，助教可以忽略此函式]
+
         從原始資料中去除不必要的 metadata，只抽取出該縣市的所有氣象資訊（不分時間、類型）
 
         Args:
@@ -59,7 +63,7 @@ class  WeatherParser(object):
     def getReport(self, location):
 
         """
-        可以使用 XML 解析原文件,或者調用 Restful API
+        可以使用 XML 解析原文件,或者調用 Restful API 去取得氣象資訊
 
         Args:
             - location: 縣市名稱的字串
@@ -68,15 +72,44 @@ class  WeatherParser(object):
         """
 
         # With xml
-        # report = self.downloadWeatherReport()
-        # report = self.parseReport(report,location)
+        report = self.downloadXMLReport()
+        description = self.parseXMLReport(report,location)
 
         # With Restful api
-        report = self.getReportWithAPI(location)
-        report = self.parseJSONReport(report)
-        weaher_element = self._getWeatherElement(report, data_type="Wx") # 取出 Wx (描述天氣狀況)的 element
-        description = self._selectTimeInterval(weaher_element)
+        # report = self.getReportWithAPI(location)
+        # report = self.parseJSONReport(report)
+        # weaher_element = self._getWeatherElement(report, data_type="Wx") # 取出 Wx (描述天氣狀況)的 element
+        # description = self._selectTimeInterval(weaher_element)
 
+        return description
+
+    def downloadXMLReport(self):
+        r = requests.get(self.api_link)
+        return r.text
+
+    def parseXMLReport(self, report, location):
+
+        """
+        解析 XML　格式的氣象資訊，回傳目標　location 的天氣資訊
+        """
+
+        xml_namespace = "{urn:cwb:gov:tw:cwbcommon:0.1}"
+        root = et.fromstring(report)
+        dataset = root.find(xml_namespace + 'dataset')
+        locations_info = dataset.findall(xml_namespace + 'location')
+
+        # 取得 <location> Elements,每個 location 就表示一個縣市資料
+        target_idx = -1
+        for idx,ele in enumerate(locations_info):
+            locationName = ele[0].text # 取得縣市名
+            if locationName == location:
+                target_idx = idx
+                break
+
+        # 挑選出目前想要 location 的氣象資料
+        weather_element = locations_info[target_idx][1] # 取出 Wx (氣象描述)
+        block_of_current_time = weather_element[1] # 取出目前時間點的資料
+        description = block_of_current_time[2][0].text
         return description
 
     def _selectTimeInterval(self, weather_element):
@@ -92,22 +125,6 @@ class  WeatherParser(object):
 
         # 第一份資料為目前時間點
         return weather_element["time"][0]["parameter"]["paramterName"]
-
-
-    def _timeParsing(self,time):
-        """
-        讀入 XXXX
-        """
-        pass
-    """
-    XML Method TODO
-        def downloadXMLReport(self):
-            r = requests.get(self.api_link)
-            return r.text
-
-        def parseXMLReport(self, report, location):
-            parseTree = et.ElementTree(report)
-    """
 
     def _getWeatherElement(self, weather_elements, data_type):
         """
