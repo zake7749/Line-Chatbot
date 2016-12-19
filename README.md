@@ -13,9 +13,9 @@
 
 天氣資料來源為中央氣象局的開放資料平台，支援 RESTful API 與 XML 兩種爬取方式，可以 `python3 weatherbot.py` 測試聊天機器人的運作。
 
-### Django 設定
+### Django Server 設計
 
-參考[[Bot] Line Echo Bot on Django](http://lee-w-blog.logdown.com/posts/1134898-line-echo-bot-on-django)
+請參考 [[Bot] Line Echo Bot on Django](http://lee-w-blog.logdown.com/posts/1134898-line-echo-bot-on-django)
 
 ## 環境配置
 
@@ -54,12 +54,10 @@ Django Project: line_bot
 └──app : line_weather_bot
 ```
 
-Line 機器人的 Webhook URL 連結設定為：`https://lineweatherbot.herokuapp.com/line_bot/callback/`
-
-
+Line 機器人的 Webhook URL 連結設定為：`https://your.server.ip/line_bot/callback/`
 
 ## Heroku 配置
 
-參考聊天機器人佈署：[\[[Bot] Deploy LineBot on Heroku \]](http://lee-w-blog.logdown.com/posts/1148021-deploy-linebot-on-heroku)
+參考聊天機器人佈署：[[Bot] Deploy LineBot on Heroku](http://lee-w-blog.logdown.com/posts/1148021-deploy-linebot-on-heroku)
 * 其中 Heroku 環境變數的設定要[稍做修正](https://devcenter.heroku.com/articles/config-vars)，更改為 `key=value`
-* 請注意，在佈署至 Heroku 前務必完成*設定方式*中 4 個環境變數的配置
+* 請注意，在運行前務必於 Heroku 完成**設定方式中 4 個環境變數的配置**
