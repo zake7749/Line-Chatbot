@@ -11,7 +11,7 @@
   * 縣市名請用繁體表示，如「臺南市」而非「台南市」
 * 否則回傳與輸入相同的對話
 
-天氣資料來源為中央氣象局的開放資料平台，支援 RESTful API 與 XML 兩種爬取方式。
+天氣資料來源為中央氣象局的開放資料平台，支援 RESTful API 與 XML 兩種爬取方式，可以 `python3 weatherbot.py` 測試聊天機器人的運作。
 
 ### Django 設定
 
@@ -54,13 +54,9 @@ Django Project: line_bot
 └──app : line_weather_bot
 ```
 
-Line 機器人的 連結 Line 聊天機器人 Webhook URL 連結設定為：`https://l的i## 設計方式
+Line 機器人的 Webhook URL 連結設定為：`https://lineweatherbot.herokuapp.com/line_bot/callback/`
 
-### 聊天機器人
 
-### Django 配置
-
-參考b
 
 ## Heroku 配置
 
