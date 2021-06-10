@@ -1,4 +1,4 @@
-Django==1.10.4
+Django==2.2.24
 future==0.16.0
 gunicorn==19.6.0
 line-bot-sdk==1.0.2
